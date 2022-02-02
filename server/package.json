@@ -1,0 +1,16 @@
+{
+  "name": "pow-server",
+  "version": "1.0.0",
+  "description": "proof of work for blockchain",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "adisa",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "crypto-js": "^4.1.1",
+    "express": "^4.17.2"
+  }
+}
