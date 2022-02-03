@@ -23,16 +23,31 @@ class Miner {
     this.mining = false;
   }
 
+  // executes mining of a verified transaction
+  mineVerifiiedTransaction(from, amount) {
+
+    // create a new transaction from the utxo
+    let block = new Block();
+    const utxo = new UTXO(from, amount);
+    const coinbaseTrnx = new Transaction([], [utxo]);
+    
+    block.addTransaction(coinbaseTrnx);
+
+     // proof of work
+     while(BigInt('0x' + block.hash()) >= TARGET_DIFFICULTY) {
+      block.nonce++;
+    }
+
+    block.execute(true);
+  }
+
   mine() {
     if (!this.mining) return;
     // find hash below target difficulty 
     let block = new Block();
 
     const coinbaseUTXO = new UTXO(PUBLIC_KEY, BLOCK_REWARD);
-
-    // have a different input / output?
     const coinbaseTrnx = new Transaction([], [coinbaseUTXO]);
-    console.log(coinbaseTrnx);
 
     block.addTransaction(coinbaseTrnx);
 
@@ -44,8 +59,7 @@ class Miner {
     block.execute();
     db.chain.addBlock(block);
     console.log(db.chain.blockHeight() + ` with hash of ${block.hash()} `);
-    console.log(db.utxos);
-
+  
     // heartbeat
     setTimeout(() => {
       this.mine();

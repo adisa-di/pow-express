@@ -59,22 +59,16 @@ app.post('/signMessage', (req, res) => {
 app.post('/verifyMessage', (req, res) => {
   const { message, signature } = req.body;
 
-  const { from } = JSON.parse(message);
+  const { from, amount } = JSON.parse(message);
   const publicKey = db.balances[from].publicKey;
   const verify = verifyMessage(signature, publicKey, message);
-  res.send(verify);
-});
 
-app.post('/transaction', (req, res) => {
-
-  // const coinbaseUTXO = new UTXO(PUBLIC_KEY, BLOCK_REWARD);
-  // const coninbaseTrnx = new Transaction([], [coinbaseUTXO]);
-
-  // what do we need 
-  // owner address
-  // amount
-  // to create a new utxo
-
+  if(verify) {
+    miner.mineVerifiiedTransaction(from, amount);
+    res.send("Mined!");
+  } else {
+    res.send("Could not verify message");
+  }
 });
 
 app.listen(PORT, () => {

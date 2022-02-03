@@ -19,8 +19,10 @@ class Block {
     ).toString();
   }
 
-  execute() {
-    this.transactions.forEach(trx => trx.execute());
+  // dummy data to check if transaction has been verified
+  // technically they all should be
+  execute(verified=false) {
+    this.transactions.forEach(trx => trx.execute(verified));
   }
 }
 

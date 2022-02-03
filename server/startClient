@@ -5,12 +5,7 @@
 signed=$(curl localhost:3001/signMessage -H "Content-Type: application/json" -d '{ "message": { "amount": "'$1'", "from": "'"$2"'", "to": "'"$3"'" }}')
 verify=$(curl localhost:3001/verifyMessage -H "Content-Type: application/json" -d $signed)
 
-if [$verify]
-then
-  #execute transaction
-  
-fi
-
+echo $verify
 
 # result=`$cmd | grep "Test:"`
 # echo $result
