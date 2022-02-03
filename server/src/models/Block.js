@@ -20,7 +20,7 @@ class Block {
   }
 
   execute() {
-    this.transactions.forEach(trx => console.log(trx.outputs));
+    this.transactions.forEach(trx => trx.execute());
   }
 }
 

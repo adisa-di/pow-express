@@ -3,15 +3,11 @@ const Miner = require('./src/mine');
 const bodyParser = require('body-parser');
 
 const app = express();
-const miner = new Miner(500); // 500 ms
+const miner = new Miner(1500); // 500 ms
 
 const PORT = 3001;
 
 app.use(bodyParser.json());
-
-app.get('/', (req, res) => {
-  res.send('got it!');
-});
 
 app.get('/start', (req, res) => {
   miner.start();
@@ -21,6 +17,13 @@ app.get('/start', (req, res) => {
 app.get('/stop', (req, res) => {
   miner.stop();
   res.send('stopped mining');
+});
+
+// post a digitally signed transaction
+app.post('/transaction', (req, res) => {
+
+  
+
 });
 
 app.listen(PORT, () => {

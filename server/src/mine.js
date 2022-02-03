@@ -2,8 +2,8 @@ const Block = require('./models/Block');
 const Blockchain = require('./models/Blockchain');
 const Transaction = require('./models/Transaction');
 const UTXO = require('./models/UTXO');
-// const { PUBLIC_KEY } = require('./config');
-// const db = require('./db');
+const { PUBLIC_KEY } = require('./config');
+const db = require('./db');
 const TARGET_DIFFICULTY = BigInt("0x0" + "F".repeat(63));
 const BLOCK_REWARD = 10;
 
@@ -29,7 +29,7 @@ class Miner {
     let block = new Block();
 
     // TODO: add transactions from the mempool
-    const coinbaseUTXO = new UTXO("test_admin", BLOCK_REWARD);
+    const coinbaseUTXO = new UTXO(PUBLIC_KEY, BLOCK_REWARD);
     const coninbaseTrnx = new Transaction([], [coinbaseUTXO]);
 
     block.addTransaction(coninbaseTrnx);
@@ -40,8 +40,9 @@ class Miner {
     }
 
     block.execute();
-    this.chain.addBlock(block);
-    console.log(this.chain.blockHeight() + ` with hash of ${block.hash()} `);
+    db.chain.addBlock(block);
+    console.log(db.chain.blockHeight() + ` with hash of ${block.hash()} `);
+    console.log(db.utxos);
 
     // heartbeat
     setTimeout(() => {
