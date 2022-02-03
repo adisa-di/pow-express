@@ -1,11 +1,6 @@
 #!/bin/bash
 
-# cmd=$(curl  -d "{"private": "tes1", "message": {"amount": 10, "to": "test2"}}" -H "Content-Type: application/json" localhost:3001/signMessage)
-
 signed=$(curl localhost:3001/signMessage -H "Content-Type: application/json" -d '{ "message": { "amount": "'$1'", "from": "'"$2"'", "to": "'"$3"'" }}')
 verify=$(curl localhost:3001/verifyMessage -H "Content-Type: application/json" -d $signed)
 
 echo $verify
-
-# result=`$cmd | grep "Test:"`
-# echo $result
