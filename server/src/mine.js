@@ -28,11 +28,13 @@ class Miner {
     // find hash below target difficulty 
     let block = new Block();
 
-    // TODO: add transactions from the mempool
     const coinbaseUTXO = new UTXO(PUBLIC_KEY, BLOCK_REWARD);
-    const coninbaseTrnx = new Transaction([], [coinbaseUTXO]);
 
-    block.addTransaction(coninbaseTrnx);
+    // have a different input / output?
+    const coinbaseTrnx = new Transaction([], [coinbaseUTXO]);
+    console.log(coinbaseTrnx);
+
+    block.addTransaction(coinbaseTrnx);
 
     // proof of work
     while(BigInt('0x' + block.hash()) >= TARGET_DIFFICULTY) {

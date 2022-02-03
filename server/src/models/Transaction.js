@@ -5,6 +5,7 @@ class Transaction {
     this.outputs = outputs;
   }
 
+  // can we do something more useful here?
   execute() {
     this.inputs.forEach((input) => {
       input.spent = true;
